@@ -1,0 +1,24 @@
+{% load static %}
+<html>
+    <head>
+    	<title> Sherry's Blog </title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Alfa Slab One' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Antic Slab' rel='stylesheet'>
+		<link rel="stylesheet" href="{%static 'css/blog.css'%}">
+    </head>
+    <body>
+        <div class="pageheader">
+            <h1><a href="/">My Blog</a></h1>
+        </div>
+        <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
