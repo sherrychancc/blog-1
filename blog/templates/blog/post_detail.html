@@ -14,21 +14,21 @@
 		{% endif %}
         {% if user.is_authenticated %}
     	<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-    	<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-    	<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+    	<a class="btn" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    	<a class="btn" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
 		{% endif %}
         <p>{{ post.text|linebreaksbr }}</p>
     </div>
     <hr>
-    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <a class="btn" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
 	{% for comment in post.comments.all %}
 	    {% if user.is_authenticated or comment.approved_comment %}
 	    <div class="comment">
 	        <div class="date">
 	            {{ comment.created_date }}
 	            {% if not comment.approved_comment %}
-	                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-	                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+	                <a class="btn" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+	                <a class="btn" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
 	            {% endif %}
 	        </div>
 	        <strong>{{ comment.author }}</strong>
@@ -38,9 +38,4 @@
 		{% empty %}
 		    <p>No comments here yet :(</p>
 	{% endfor %}
-	<h4>New comment</h4>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Submit Comment</button>
-    </form>
 {% endblock %}

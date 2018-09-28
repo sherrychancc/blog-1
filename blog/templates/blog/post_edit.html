@@ -2,9 +2,24 @@
 
 {% block content %}
 
+<html>
+
+	<head>
+		<style>
+		  .errorlist { 
+		       background-color: #ffffff; /* Green */
+		       
+		    }
+		</style>
+	</head>
+
     <h1>New post</h1>
+    <p>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+        <button type="submit" class="btn">Save</button>
     </form>
+    </p>
+</html>
+
 {% endblock %}

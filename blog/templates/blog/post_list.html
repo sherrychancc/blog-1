@@ -1,15 +1,64 @@
-{% extends 'blog/base.html' %}
 
-{% block content %}
 
-{% for post in posts %}
-	<div class="post">
-		<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-		<div class="date">
-		    <p>Published {{ post.published_date }}</p>
-		</div>
-		<p>{{ post.text|linebreaksbr }}</p>
-		<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
-	</div>
-{% endfor %}
-{% endblock %}
+{%load static%}
+
+<html>
+    <head>
+    	<title> Sherry's Blog </title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Alfa Slab One' rel='stylesheet'>
+		<link href='https://fonts.googleapis.com/css?family=Antic Slab' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+		<link rel="stylesheet" href="{%static 'css/blog.css'%}">
+		<style>
+		  .bg-1 { 
+		       background-color: #ffaa00; /* Green */
+		       color: #ffffff;
+		    }
+		</style>
+    </head>
+    <body>
+        <div class="pageheader">
+            {% if user.is_authenticated %}
+                <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+                <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+            {% else %}
+                <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+            {% endif %}
+            <ul>
+            <li><a href="/"><img src="{%static 'img/hkflag.png'%}" style="width:50px; height:35px"></a></li>
+            <li><a href="/"> About </a></li>
+            <li><a href="/"> Contact </a></li>
+        </div>
+
+        <div class="container-fluid bg-1 text-center">
+		    <h3>Who Am I?</h3>
+		    <img src="{%static 'img/author.jpg'%}" style="width=200px; height:200px" class="img-circle" alt="Author">
+		    <h3>4th year, Computer Science major, Hong Kong-nese</h3>
+		 </div>
+        
+        <div class="container-fluid text-center">
+			{% for post in posts %}
+				
+				<div class="post">
+					<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+					<div class="date">
+					    <p>Published {{ post.published_date }}</p>
+					</div>
+					<p>{{ post.text|linebreaksbr }}</p>
+					<p>
+						{% if post.approved_comments.count > 1 %}
+							<a href="{% url 'post_detail' pk=post.pk %}"> View the {{ post.approved_comments.count }} comments </a>
+						{% elif post.approved_comments.count == 1 %}
+							<a href="{% url 'post_detail' pk=post.pk %}"> View the {{ post.approved_comments.count }} comment </a>
+						{% else %}
+							<a href="{% url 'post_detail' pk=post.pk %}"> Add comment </a>
+						{% endif %}
+				</p>
+				<hr>
+			{% endfor %}
+    </div>
+    </body>
+</html>
